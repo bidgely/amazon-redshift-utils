@@ -278,9 +278,9 @@ def get_grants(schema_name, table_name, current_user):
     for grant in grants:
         if grant[3] == True:
             grant_statements.append(
-                "grant %s on %s.%s to group %s;" % (grant[2].lower(), schema_name, table_name, grant[4]))
+                "grant %s on %s.%s to group \"%s\";" % (grant[2].lower(), schema_name, table_name, grant[4]))
         else:
-            grant_statements.append("grant %s on %s.%s to %s;" % (grant[2].lower(), schema_name, table_name, grant[4]))
+            grant_statements.append("grant %s on %s.%s to \"%s\";" % (grant[2].lower(), schema_name, table_name, grant[4]))
 
     if len(grant_statements) > 0:
         return grant_statements
@@ -491,7 +491,7 @@ def reduce_column_length(col_type, column_name, table_name):
         if new_column_len > 65535:
             return col_type
         # if the new length would be 0 then return the current value - no changes
-        if new column_len == 0:
+        if new_column_len == 0:
             return col_type
 
         if debug:
@@ -782,7 +782,7 @@ def analyze(table_info):
                                                                             schema_name,
                                                                             table_name)
                 if len(table_sortkeys) > 0:
-                    insert = "%s order by %s;" % (insert, ",".join(table_sortkeys))
+                    insert = "%s order by \"%s\";" % (insert, ",".join(table_sortkeys).replace(',','\",\"'))
                 else:
                     insert = "%s;" % (insert)
 
