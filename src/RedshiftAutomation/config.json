@@ -1,0 +1,32 @@
+{
+    "configuration": {
+        "cluster_name": "na-rs1",
+        "db_host": "na-rs1.ctxwwf9dwnm1.us-east-1.redshift.amazonaws.com",
+        "db_port": "5439",
+        "db_user": "bidgely",
+        "encrypted_pwd": "AQICAHib40kVSv29MasxLNyOH+bc65211Ta7qvHpey79BVhWvQElvmDxLoLIu/EPh3HitTyYAAAAazBpBgkqhkiG9w0BBwagXDBaAgEAMFUGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMez11SNYh5elXr4/MAgEQgCjiUfF1t+R5tkltaxg8xRikxMeVXVO/Q/AG3R5jsDmdfFOaUT900Qkl", 
+        "db": "bdw",
+        "schema_name": "public",
+        "s3_unload_location": "bidgely-devops/redshift-automation/",
+        "s3_unload_role_arn": "arn:aws:iam::<your account number>:role/<role name>",
+        "drop_old_data": "false",
+        "systable_cleanup_after_days": "0",
+        "comprows": -1,
+        "ignore_errors": true,
+        "query_group": "",
+        "query_slot_count": 7,
+        "force": false,
+        "output_file": "/tmp/redshift-automation.log",
+        "debug": true,
+        "do_execute": true,
+        "analyze_col_width": 1,
+        "threads": 1,
+        "ssl": true,
+        "do_analyze": true,
+        "do_vacuum": true,
+        "agg_interval": "1 hour"
+    },
+    "utilities": [
+        "AnalyzeVacuumUtility"
+    ]
+}

@@ -40,11 +40,12 @@ def get_password(kms_connection, config_detail, debug):
     else:
         return None
 
-def get_config(config_location, current_region, debug):
+def get_config(config_location, current_profile, debug):
     if config_location.startswith("s3://"):
         print("Downloading configuration from %s" % config_location)
         # load the configuration file from S3
-        s3_client = boto3.client('s3', region_name=current_region)
+        session = boto3.session.Session(profile_name=current_profile)
+        s3_client = session.client('s3')
 
         bucket = config_location.replace('s3://', '').split("/")[0]
         key = config_location.replace('s3://' + bucket + "/", '')

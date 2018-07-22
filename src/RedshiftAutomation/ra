@@ -22,7 +22,7 @@ import wlm_scheduler
 import common
 import boto3
 
-REGION_KEY = 'AWS_REGION'
+PROFILE_KEY = 'AWS_PROFILE'
 debug = False
 
 def usage():
@@ -36,15 +36,16 @@ def usage():
     sys.exit(-1)
 
 
-def cli(utility, config_loc, use_region):
-    kms_connection = boto3.client('kms', region_name=use_region)
+def cli(utility, config_loc, use_profile):
+    session = boto3.session.Session(profile_name=use_profile);
+    kms_connection = session.client('kms')
 
     global debug
     if 'DEBUG' in os.environ and os.environ['DEBUG'] == True:
         debug = True
 
     # extract the configuration
-    config = common.get_config(config_loc, use_region, debug)
+    config = common.get_config(config_loc, use_profile, debug)
 
     if config_constants.DEBUG in config and config[config_constants.DEBUG]:
         debug = True
@@ -102,10 +103,10 @@ def cli(utility, config_loc, use_region):
 
 
 if __name__ == "__main__":
-    if REGION_KEY not in os.environ:
-        raise Exception("Unable to run without environment variable %s set" % REGION_KEY)
+    if PROFILE_KEY not in os.environ:
+        use_profile = 'default'
     else:
-        use_region = os.environ[REGION_KEY]
+        use_profile = os.environ[PROFILE_KEY]
     parser = argparse.ArgumentParser(description='cli args')
     parser.add_argument('--utility', dest='utility', required=True,
                         help='Utility to invoke (ColumnEncodingUtility, Analyze, Vacuum, Monitor, SystemTablePersistence, WlmScheduler)')
@@ -113,4 +114,4 @@ if __name__ == "__main__":
                         help='Config File location (s3://bucket/prefix/file.json)')
     args = parser.parse_args()
 
-    cli(args.utility, args.config, use_region)
+    cli(args.utility, args.config, use_profile)

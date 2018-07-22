@@ -13,7 +13,7 @@ from botocore.exceptions import *
 OK = 0
 ERROR = -1
 INVALID_ARGS = -2
-region_key = 'AWS_REGION'
+profile_key = 'AWS_PROFILE'
 cmk = 'alias/RedshiftUtilsLambdaRunner'
 
 
@@ -21,25 +21,27 @@ def encrypt_password(args):
     if len(args) < 2:
         print("You must supply the password to be encrypted")
         sys.exit(INVALID_ARGS)
-    try:
-        current_region = os.environ[region_key]
-
-        if current_region is None or current_region == '':
-            raise KeyError
+   
+    try: 
+        current_profile = os.environ[profile_key]
     except KeyError:
-        raise Exception("Unable to resolve environment variable %s" % region_key)
+        current_profile = None
+
+    if current_profile is None or current_profile == '':
+        current_profile = 'default'
 
     try:
-        encrypt(current_region, args[1], None if len(args) == 2 else args[2])
+        encrypt(current_profile, args[1], None if len(args) == 2 else args[2])
         sys.exit(OK)
     except Exception as e:
         print(e)
         return ERROR
 
 
-def encrypt(aws_region, password, auth_context):
+def encrypt(aws_profile, password, auth_context):
     # create a KMS connection
-    kms_connection = boto3.client('kms', region_name=aws_region)
+    session = boto3.session.Session(profile_name=aws_profile)
+    kms_connection = session.client('kms')
 
     # check to see if the application Customer Master Key exists
     cmk_status = None
@@ -79,7 +81,7 @@ def encrypt(aws_region, password, auth_context):
         encrypted = kms_connection.encrypt(KeyId=cmk,
                                            Plaintext=password)
 
-    print("Encryption Complete in %s" % region_key)
+    print("Encryption Complete with %s" % aws_profile)
     print("Encrypted Password: %s" % base64.b64encode(encrypted['CiphertextBlob']))
 
 
