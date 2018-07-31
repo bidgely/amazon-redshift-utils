@@ -14,7 +14,7 @@
         "comprows": -1,
         "ignore_errors": true,
         "query_group": "",
-        "query_slot_count": 7,
+        "query_slot_count": 3,
         "force": false,
         "output_file": "/tmp/redshift-automation.log",
         "debug": true,
