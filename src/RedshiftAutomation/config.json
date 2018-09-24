@@ -4,7 +4,7 @@
         "db_host": "na-rs1.ctxwwf9dwnm1.us-east-1.redshift.amazonaws.com",
         "db_port": "5439",
         "db_user": "bidgely",
-        "encrypted_pwd": "AQICAHib40kVSv29MasxLNyOH+bc65211Ta7qvHpey79BVhWvQElvmDxLoLIu/EPh3HitTyYAAAAazBpBgkqhkiG9w0BBwagXDBaAgEAMFUGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMez11SNYh5elXr4/MAgEQgCjiUfF1t+R5tkltaxg8xRikxMeVXVO/Q/AG3R5jsDmdfFOaUT900Qkl", 
+        "encrypted_pwd": "AQICAHib40kVSv29MasxLNyOH+bc65211Ta7qvHpey79BVhWvQExFGBtUuciaVqmsADRyCx4AAAAajBoBgkqhkiG9w0BBwagWzBZAgEAMFQGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMaIVSik1j6mQi7onjAgEQgCcraUO9RdnN74r4iihfNnqdhHXAOQ+zw24H/NYmGoJXRzPbK8X4TMc=", 
         "db": "bdw",
         "schema_name": "public",
         "s3_unload_location": "bidgely-devops/redshift-automation/",
